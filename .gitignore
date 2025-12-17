@@ -1,0 +1,25 @@
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.iml
+
+# Java / Maven (Backend)
+backend/target/
+backend/**/*.class
+backend/*.log
+backend/.mvn/wrapper/maven-wrapper.properties
+
+# Node / Angular (Frontend)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+frontend/npm-debug.log
+frontend/yarn-error.log
+
+# System
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
