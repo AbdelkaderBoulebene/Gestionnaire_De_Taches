@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
+import { Router } from '@angular/router';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { DashboardStats } from '../../core/models/dashboard.model';
@@ -15,27 +16,27 @@ import { DashboardStats } from '../../core/models/dashboard.model';
       
       <!-- KPI Cards -->
       <div class="stats-grid" *ngIf="stats">
-        <div class="stat-card">
+        <div class="stat-card" (click)="navigateToTasks()">
           <div class="stat-value">{{ stats.totalTasks }}</div>
           <div class="stat-label">Total Tâches</div>
         </div>
-        <div class="stat-card todo">
+        <div class="stat-card todo" (click)="navigateToTasks('TODO')">
           <div class="stat-value">{{ stats.todoTasks }}</div>
           <div class="stat-label">À Faire</div>
         </div>
-        <div class="stat-card in-progress">
+        <div class="stat-card in-progress" (click)="navigateToTasks('IN_PROGRESS')">
           <div class="stat-value">{{ stats.inProgressTasks }}</div>
           <div class="stat-label">En Cours</div>
         </div>
-        <div class="stat-card done">
+        <div class="stat-card done" (click)="navigateToTasks('DONE')">
           <div class="stat-value">{{ stats.doneTasks }}</div>
           <div class="stat-label">Terminées</div>
         </div>
-        <div class="stat-card overdue">
+        <div class="stat-card overdue" (click)="navigateToTasks(undefined, 'overdue')">
           <div class="stat-value">{{ stats.overdueTasks }}</div>
           <div class="stat-label">En Retard</div>
         </div>
-        <div class="stat-card projects">
+        <div class="stat-card projects" (click)="navigateToProjects('ACTIVE')">
           <div class="stat-value">{{ stats.activeProjects }}</div>
           <div class="stat-label">Projets Actifs</div>
         </div>
@@ -98,7 +99,7 @@ import { DashboardStats } from '../../core/models/dashboard.model';
       border-left: 4px solid #667eea;
       transition: transform 0.2s;
     }
-    .stat-card:hover { transform: translateY(-2px); }
+    .stat-card:hover { transform: translateY(-2px); cursor: pointer; }
 
     .stat-card.todo { border-left-color: #4299e1; }
     .stat-card.in-progress { border-left-color: #ed8936; }
@@ -167,10 +168,26 @@ export class DashboardComponent implements OnInit {
     }]
   };
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(
+    private dashboardService: DashboardService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.loadStats();
+  }
+
+  navigateToTasks(status?: string, filter?: string): void {
+    const queryParams: any = {};
+    if (status) queryParams.status = status;
+    if (filter) queryParams.filter = filter;
+    this.router.navigate(['/tasks'], { queryParams });
+  }
+
+  navigateToProjects(status?: string): void {
+    const queryParams: any = {};
+    if (status) queryParams.status = status;
+    this.router.navigate(['/projects'], { queryParams });
   }
 
   loadStats(): void {

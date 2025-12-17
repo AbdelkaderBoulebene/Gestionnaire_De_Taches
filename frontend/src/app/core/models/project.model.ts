@@ -10,4 +10,5 @@ export interface Project {
     priority: Priority;
     createdAt?: string;
     tasks?: any[];
+    taskCount?: number;
 }
