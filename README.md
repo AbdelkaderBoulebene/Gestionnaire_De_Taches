@@ -8,7 +8,7 @@
 Un système de gestion de tâches moderne et élégant, conçu pour offrir une expérience utilisateur fluide grâce à une interface "Glassmorphism" et des fonctionnalités puissantes.
 
 ![Dashboard Preview](docs/screenshots/dashboard.png)
-*Aperçu du Tableau de Bord (Ajoutez votre capture ici : docs/screenshots/dashboard.png)*
+*Aperçu du Tableau de Bord*
 
 ## ✨ Nouveautés v1.0
 
@@ -89,4 +89,4 @@ Un jeu de données complet est fourni. Connectez-vous avec :
 ![Task Details](docs/screenshots/task_details.png)
 
 ---
-*Développé avec ❤️ - Version 1.0 - 2025*
+*Développé par BOULEBENE Abdelkader - Version 1.0 - 2025*
