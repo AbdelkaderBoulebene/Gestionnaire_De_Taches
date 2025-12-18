@@ -19,6 +19,11 @@ export const routes: Routes = [
         canActivate: [authGuard]
     },
     {
+        path: 'projects/archived',
+        loadComponent: () => import('./features/projects/archived-projects/archived-projects.component').then(m => m.ArchivedProjectsComponent),
+        canActivate: [authGuard]
+    },
+    {
         path: 'projects/new',
         loadComponent: () => import('./features/projects/project-form/project-form.component').then(m => m.ProjectFormComponent),
         canActivate: [authGuard, adminGuard]

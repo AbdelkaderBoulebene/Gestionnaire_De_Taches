@@ -21,6 +21,14 @@ export class TaskService {
         return this.http.get<Task[]>(this.apiUrl, { params });
     }
 
+    getTasksOfProject(projectId: number): Observable<Task[]> {
+        return this.getTasks(undefined, undefined, projectId);
+    }
+
+    getTasksByProject(projectId: number): Observable<Task[]> {
+        return this.getTasks(undefined, undefined, projectId);
+    }
+
     getTask(id: number): Observable<Task> {
         return this.http.get<Task>(`${this.apiUrl}/${id}`);
     }

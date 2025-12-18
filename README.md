@@ -1,231 +1,92 @@
-# Gestionnaire de Tâches - Task Management System
+# Flowify - Task Management System (v1.0)
 
-Un système complet de gestion de tâches et projets pour PME, développé avec Java Spring Boot et Angular.
+![Twemoji Rocket](https://img.shields.io/badge/Release-v1.0-blue?style=for-the-badge&logo=rocket)
+![Angular](https://img.shields.io/badge/Frontend-Angular_17-red?style=for-the-badge&logo=angular)
+![Spring Boot](https://img.shields.io/badge/Backend-Spring_Boot_3-green?style=for-the-badge&logo=springboot)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791?style=for-the-badge&logo=postgresql)
 
-## 🚀 Fonctionnalités
+Un système de gestion de tâches moderne et élégant, conçu pour offrir une expérience utilisateur fluide grâce à une interface "Glassmorphism" et des fonctionnalités puissantes.
 
-### Gestion des Projets
-- Créer, modifier et supprimer des projets
-- Suivre l'avancement des projets
-- Filtrer par statut, priorité et dates
-- Visualiser les tâches associées
+![Dashboard Preview](docs/screenshots/dashboard.png)
+*Aperçu du Tableau de Bord (Ajoutez votre capture ici : docs/screenshots/dashboard.png)*
 
-### Gestion des Tâches
-- Créer et assigner des tâches
-- Définir les priorités (Basse, Moyenne, Haute)
-- Gérer les statuts (À faire, En cours, Terminé)
-- Filtrer et rechercher les tâches
-- Suivre les dates limites
+## ✨ Nouveautés v1.0
 
-### Gestion des Utilisateurs
-- Système d'authentification sécurisé (JWT)
-- Rôles ADMIN et USER
-- Gestion des permissions
+- **Design Premium** : Interface utilisateur refondue avec le style Glassmorphism (effets de flou, translucidité).
+- **Navigation Optimisée** : Barre de navigation fixe avec effet de flou pour une meilleure lisibilité.
+- **Gestion Avancée des Tâches** :
+  - Descriptions extensibles au clic pour garder la liste épurée.
+  - Filtres dynamiques par statut, priorité et projet.
+  - Assignation multi-utilisateurs.
+- **Données de Démonstration** : Script de génération de données réalistes inclus.
+- **Sécurité Renforcée** : Authentification JWT complète avec rôles (ADMIN/USER).
 
-### Tableau de Bord
-- Statistiques en temps réel
-- Visualisation des tâches par statut
-- Répartition des tâches par utilisateur
-- Alertes pour tâches en retard
+## 🚀 Fonctionnalités Clés
 
-### Notifications
-- Notification lors de l'assignation de tâches
-- Alertes pour les échéances proches
-- Système de notifications in-app
+### 📊 Tableau de Bord
+- Statistiques en temps réel.
+- Vue globale de l'avancement.
+- Alertes pour les tâches en retard.
 
-## 📋 Prérequis
+### � Projets
+- Création et suivi de projets.
+- Archivage des anciens projets.
+- Vue détaillée des tâches par projet.
 
-### Backend
-- Java 17 ou supérieur
-- Maven 3.6+
-- PostgreSQL 12+ (ou MySQL 8+)
+### ✅ Tâches
+- **Liste Intelligente** : Tri, filtrage et recherche instantanée.
+- **Détails à la Demande** : Cliquez sur une tâche pour voir sa description complète.
+- **Édition Rapide** : Modification de statut en un clic.
+- **Assignation** : Attribuez des tâches à plusieurs collaborateurs.
 
-### Frontend
-- Node.js 18+ et npm
-- Angular CLI 17+
+![Task List](docs/screenshots/task_list.png)
+*Liste des Tâches avec Description Étendue*
 
-## 🛠️ Installation
+## 🛠️ Installation Rapide
 
-### 1. Configuration de la Base de Données
+### Prérequis
+- Java 17+ & Maven
+- Node.js 18+ & npm
+- PostgreSQL 12+
 
-Créez une base de données PostgreSQL :
+### 1. Base de Données
+Créez une base de données vide nommée `gestionnaire_taches`.
 
-```sql
-CREATE DATABASE gestionnaire_taches;
-CREATE USER gestionnaire_user WITH PASSWORD 'votre_mot_de_passe';
-GRANT ALL PRIVILEGES ON DATABASE gestionnaire_taches TO gestionnaire_user;
-```
-
-### 2. Configuration du Backend
-
-1. Naviguez vers le dossier backend :
+### 2. Backend (Spring Boot)
 ```bash
 cd backend
-```
-
-2. Modifiez `src/main/resources/application.properties` avec vos paramètres de base de données :
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/gestionnaire_taches
-spring.datasource.username=gestionnaire_user
-spring.datasource.password=votre_mot_de_passe
-```
-
-3. Compilez et lancez le backend :
-```bash
 mvn clean install
 mvn spring-boot:run
 ```
+*Le serveur démarrera sur le port 8080.*
 
-Le backend sera accessible sur `http://localhost:8080`
+> **Note** : Au premier lancement, utilisez le script `execute_reset.bat` (Windows) dans `src/main/resources` pour peupler la base de données avec des utilisateurs et projets de démo !
 
-### 3. Configuration du Frontend
-
-1. Naviguez vers le dossier frontend :
+### 3. Frontend (Angular)
 ```bash
 cd frontend
-```
-
-2. Installez les dépendances :
-```bash
 npm install
-```
-
-3. Lancez l'application :
-```bash
 npm start
 ```
+*L'application sera accessible sur http://localhost:4200*
 
-Le frontend sera accessible sur `http://localhost:4200`
+## 🔑 Connexion Démo
 
-## 👤 Compte par Défaut
+Un jeu de données complet est fourni. Connectez-vous avec :
 
-Pour créer un compte administrateur, utilisez l'endpoint de registration avec le rôle ADMIN :
+| Rôle | Email | Mot de passe |
+|------|-------|--------------|
+| **ADMIN** | `admin@gestionnaire.com` | `motdepasse` |
+| **MANAGER** | `sophie.martin@gestionnaire.com` | `motdepasse` |
+| **USER** | `julie.bernard@gestionnaire.com` | `motdepasse` |
 
-```bash
-curl -X POST http://localhost:8080/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Admin",
-    "email": "admin@example.com",
-    "password": "admin123",
-    "role": "ADMIN"
-  }'
-```
+## � Galerie
 
-## 📚 Structure du Projet
+### Page Projets
+![Projects Page](docs/screenshots/projects.png)
 
-### Backend (Spring Boot)
-```
-backend/
-├── src/main/java/com/gestionnaire/
-│   ├── config/          # Configuration Spring Security, CORS
-│   ├── controller/      # REST API Controllers
-│   ├── dto/            # Data Transfer Objects
-│   ├── entity/         # Entités JPA
-│   ├── enums/          # Énumérations
-│   ├── repository/     # Repositories JPA
-│   ├── security/       # JWT, Authentication
-│   └── service/        # Business Logic
-└── src/main/resources/
-    └── application.properties
-```
+### Détails Tâche
+![Task Details](docs/screenshots/task_details.png)
 
-### Frontend (Angular)
-```
-frontend/src/app/
-├── core/
-│   ├── guards/         # Route Guards
-│   ├── interceptors/   # HTTP Interceptors
-│   ├── models/         # TypeScript Models
-│   └── services/       # Services HTTP
-└── features/
-    ├── auth/           # Login, Register
-    ├── dashboard/      # Tableau de bord
-    ├── projects/       # Gestion projets
-    ├── tasks/          # Gestion tâches
-    └── users/          # Gestion utilisateurs
-```
-
-## 🔐 Sécurité
-
-- Authentification JWT avec expiration de 24h
-- Mots de passe chiffrés avec BCrypt
-- Protection CORS configurée
-- Contrôle d'accès basé sur les rôles (RBAC)
-
-## 🌐 API Endpoints
-
-### Authentification
-- `POST /api/auth/login` - Connexion
-- `POST /api/auth/register` - Inscription
-
-### Projets
-- `GET /api/projects` - Liste des projets
-- `POST /api/projects` - Créer un projet (ADMIN)
-- `PUT /api/projects/{id}` - Modifier un projet (ADMIN)
-- `DELETE /api/projects/{id}` - Supprimer un projet (ADMIN)
-
-### Tâches
-- `GET /api/tasks` - Liste des tâches
-- `POST /api/tasks` - Créer une tâche
-- `PUT /api/tasks/{id}` - Modifier une tâche
-- `PATCH /api/tasks/{id}/status` - Changer le statut
-- `DELETE /api/tasks/{id}` - Supprimer une tâche
-
-### Dashboard
-- `GET /api/dashboard/stats` - Statistiques globales
-- `GET /api/dashboard/tasks-by-status` - Tâches par statut
-- `GET /api/dashboard/tasks-by-user` - Tâches par utilisateur
-
-### Utilisateurs (ADMIN uniquement)
-- `GET /api/users` - Liste des utilisateurs
-- `POST /api/users` - Créer un utilisateur
-- `PUT /api/users/{id}` - Modifier un utilisateur
-- `DELETE /api/users/{id}` - Supprimer un utilisateur
-
-## 🧪 Tests
-
-### Backend
-```bash
-cd backend
-mvn test
-```
-
-### Frontend
-```bash
-cd frontend
-npm test
-```
-
-## 📦 Déploiement
-
-### Backend
-```bash
-cd backend
-mvn clean package
-java -jar target/gestionnaire-taches-1.0.0.jar
-```
-
-### Frontend
-```bash
-cd frontend
-npm run build
-# Les fichiers de production seront dans dist/
-```
-
-## 🤝 Contribution
-
-Ce projet a été développé selon le cahier des charges fourni pour un système de gestion de tâches pour PME.
-
-## 📄 Licence
-
-Projet académique - Tous droits réservés
-
-## 🐛 Problèmes Connus
-
-- Les notifications par email nécessitent une configuration SMTP supplémentaire
-- Les graphiques du dashboard nécessitent Chart.js (à implémenter)
-
-## 📞 Support
-
-Pour toute question ou problème, veuillez créer une issue dans le repository.
+---
+*Développé avec ❤️ - Version 1.0 - 2025*

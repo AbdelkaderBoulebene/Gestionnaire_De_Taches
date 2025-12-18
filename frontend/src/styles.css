@@ -1,4 +1,106 @@
-/* Global Styles */
+/* Global Design System - Flowify (Luminous Glass) */
+
+
+/* 1. Base Variables (Light Mode / Daylight Glass) */
+:root {
+  /* Daylight Aurora */
+  /* Daylight Aurora - Slightly dimmed for comfort */
+  --bg-deep: #cbd5e1;
+  /* Slate-300 - Even darker for better contrast per request */
+  --bg-aurora: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 60%);
+
+  /* Accents - Softer for day */
+  --primary-glow: #2563EB;
+  /* Royal Blue */
+  --accent-glow: #7C3AED;
+  /* Violet */
+  --success-glow: #059669;
+  /* Emerald */
+  --warning-glow: #D97706;
+  /* Amber */
+  --danger-glow: #E11D48;
+  /* Rose */
+
+  /* Glass - Light & Frosty */
+  --glass-surface: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-highlight: rgba(255, 255, 255, 0.8);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+
+  /* Text - Dark & Sharp */
+  --text-primary: #1E293B;
+  --text-heading: #1E293B;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+
+  /* Typography */
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  /* Compatibility / Layout Colors - OPAQUE for Navbar */
+  --surface-color: rgba(255, 255, 255, 0.95);
+  --surface-hover: rgba(255, 255, 255, 0.8);
+  --border-color: var(--glass-border);
+}
+
+/* 2. Dark Mode Overrides (Midnight Glass) */
+body.dark-theme {
+  /* Midnight Aurora */
+  --bg-deep: #030712;
+  --bg-aurora: radial-gradient(circle at 10% 20%, rgba(34, 211, 238, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 60%);
+
+  /* Accents - Neon */
+  --primary-glow: #22d3ee;
+  --accent-glow: #8b5cf6;
+  --success-glow: #34d399;
+  --warning-glow: #fbbf24;
+  --danger-glow: #f43f5e;
+
+  /* Glass - Dark & Deep */
+  --glass-surface: rgba(15, 23, 42, 0.6);
+  /* Darker glass for better contrast */
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-highlight: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+
+  /* Form Inputs - Dark Mode Override */
+  & input,
+  & select,
+  & textarea {
+    background-color: rgba(30, 41, 59, 0.8);
+    /* Slate 800 */
+    color: #f8fafc;
+    /* Slate 50 */
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  & input:focus,
+  & select:focus,
+  & textarea:focus {
+    border-color: var(--primary-glow);
+    background-color: rgba(30, 41, 59, 1);
+  }
+
+
+  /* Text - Light & Glowing */
+  --text-primary: #F8FAFC;
+  --text-heading: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+
+  /* Dark Mode Surfaces - OPAQUE for Navbar */
+  --surface-color: rgba(15, 23, 42, 0.95);
+  --surface-hover: rgba(255, 255, 255, 0.1);
+}
+
+/* 3. Global Reset & Layout */
 * {
   margin: 0;
   padding: 0;
@@ -6,193 +108,212 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f7fafc;
-  color: #2d3748;
-  line-height: 1.6;
+  background-color: var(--bg-deep);
+  background-image: var(--bg-aurora);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Utility Classes */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-  margin-bottom: 20px;
-}
-
-.btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-}
-
-.btn-secondary {
-  background: #e2e8f0;
-  color: #2d3748;
-}
-
-.btn-secondary:hover {
-  background: #cbd5e0;
-}
-
-.btn-danger {
-  background: #fc8181;
-  color: white;
-}
-
-.btn-danger:hover {
-  background: #f56565;
-}
-
-/* Badge Styles */
-.badge {
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-.badge-low {
-  background: #c6f6d5;
-  color: #22543d;
-}
-
-.badge-medium {
-  background: #feebc8;
-  color: #7c2d12;
-}
-
-.badge-high {
-  background: #fed7d7;
-  color: #742a2a;
-}
-
-.badge-todo {
-  background: #bee3f8;
-  color: #2c5282;
-}
-
-.badge-in-progress {
-  background: #feebc8;
-  color: #7c2d12;
-}
-
-.badge-done {
-  background: #c6f6d5;
-  color: #22543d;
-}
-
-/* Table Styles */
 table {
+  table-layout: fixed;
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 12px;
 }
 
-th, td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #e2e8f0;
+th,
+td {
+  overflow: hidden;
 }
 
-th {
-  background: #f7fafc;
-  font-weight: 600;
-  color: #4a5568;
+.container {
+  max-width: 1440px;
+  /* Increased max-width */
+  margin: 0 auto;
+  padding: 48px 40px;
+  /* Increased padding */
 }
 
-tr:hover {
-  background: #f7fafc;
+/* 4. Utilities */
+.glass-panel {
+  background: var(--glass-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-highlight);
+  box-shadow: var(--glass-shadow);
 }
 
-/* Form Styles */
-.form-group {
-  margin-bottom: 20px;
+.text-glow {
+  text-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
 }
 
-.form-group label {
+/* Typography Overrides */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+/* 5. Component Base Styles */
+
+/* Cards */
+.card {
+  background: var(--glass-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 24px;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: var(--glass-shadow);
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.01);
+  border-color: var(--primary-glow);
+  box-shadow: 0 0 30px rgba(34, 211, 238, 0.15);
+  /* Neon shadow only really visible in dark mode or if primary-glow is bright */
+}
+
+.glass-toggle-pill button.active {
+  background: var(--primary-glow);
+  color: #000;
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+}
+
+/* Utilities */
+.text-wrap-responsive {
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #2d3748;
 }
 
-.form-control {
-  width: 100%;
-  padding: 10px 14px;
-  border: 2px solid #e2e8f0;
+.text-truncate-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Form Inputs - Global Visibility Fix */
+input,
+select,
+textarea {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+  padding: 10px 16px;
   border-radius: 8px;
-  font-size: 14px;
-  transition: border-color 0.3s ease;
+  width: 100%;
+  font-family: var(--font-body);
+  transition: all 0.2s;
+}
+
+/* Dark mode overrides for form inputs */
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+  background-color: rgba(30, 41, 59, 0.8);
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-glow);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+body.dark-theme input:focus,
+body.dark-theme select:focus,
+body.dark-theme textarea:focus {
+  border-color: var(--primary-glow);
+  background-color: rgba(30, 41, 59, 1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Buttons */
+.btn {
+  background: rgba(34, 211, 238, 0.1);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  color: var(--primary-glow);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 12px 24px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--primary-glow);
+  color: #fff;
+  /* Always white on hover for contrast */
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+/* Form Controls */
+.form-control {
+  background: rgba(255, 255, 255, 0.05);
+  /* Works for dark, needs adjust for light? */
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  border-radius: 12px;
+  padding: 12px;
+  width: 100%;
+  font-family: inherit;
+  transition: all 0.3s;
+}
+
+/* In Light mode, input background needs to be darker/visible */
+:not(.dark-theme) .form-control {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 .form-control:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--primary-glow);
+  background: rgba(34, 211, 238, 0.05);
 }
 
-select.form-control {
-  cursor: pointer;
-}
-
-textarea.form-control {
-  min-height: 100px;
-  resize: vertical;
-}
-
-/* Loading Spinner */
-.spinner {
-  border: 3px solid #f3f3f3;
-  border-top: 3px solid #667eea;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin: 20px auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .container {
-    padding: 10px;
-  }
-
-  .card {
-    padding: 16px;
-  }
-
-  table {
-    font-size: 14px;
-  }
-
-  th, td {
-    padding: 8px;
-  }
+/* Compatibility/Legacy overrides to map old variables if needed */
+:root {
+  --border-color: var(--glass-border);
 }

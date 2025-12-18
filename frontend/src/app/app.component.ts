@@ -8,11 +8,8 @@ import { AuthService } from './core/services/auth.service';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, CommonModule, NavbarComponent],
-  template: `
-    <app-navbar *ngIf="isAuthenticated"></app-navbar>
-    <router-outlet></router-outlet>
-  `,
-  styles: []
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'Gestionnaire de Tâches';

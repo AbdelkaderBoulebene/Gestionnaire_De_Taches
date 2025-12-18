@@ -58,6 +58,22 @@ export class AuthService {
         return user?.role === 'ADMIN';
     }
 
+    isManager(): boolean {
+        const user = this.getCurrentUser();
+        return user?.role === 'MANAGER';
+    }
+
+    // RBAC Helpers
+    canManageProjects(): boolean {
+        const user = this.getCurrentUser();
+        return user?.role === 'ADMIN' || user?.role === 'MANAGER';
+    }
+
+    canManageUsers(): boolean {
+        const user = this.getCurrentUser();
+        return user?.role === 'ADMIN';
+    }
+
     private handleAuthResponse(response: AuthResponse): void {
         localStorage.setItem(this.TOKEN_KEY, response.token);
         const user: User = {

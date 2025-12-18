@@ -25,6 +25,7 @@ import { User } from '../../../core/models/user.model';
           <div class="form-group">
             <label for="title">Titre</label>
             <input type="text" id="title" formControlName="title" class="form-control" 
+                   maxlength="50"
                    [class.is-invalid]="submitted && f['title'].errors">
             <div class="invalid-feedback" *ngIf="submitted && f['title'].errors">
               <span *ngIf="f['title'].errors['required']">Le titre est requis</span>
@@ -118,48 +119,106 @@ import { User } from '../../../core/models/user.model';
   `,
   styles: [`
     .form-page { max-width: 800px; margin: 40px auto; padding: 0 20px; }
-    .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden; }
-    .card-header { background: #f7fafc; padding: 20px 30px; border-bottom: 1px solid #e2e8f0; }
-    .card-header h2 { margin: 0; color: #2d3748; font-size: 24px; }
+    .card { 
+      background: var(--glass-surface); 
+      border-radius: 12px; 
+      box-shadow: var(--glass-shadow); 
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+    }
+    .card-header { 
+      background: rgba(0,0,0,0.05); 
+      padding: 20px 30px; 
+      border-bottom: 1px solid var(--glass-border); 
+    }
+    .card-header h2 { margin: 0; color: var(--text-primary); font-size: 24px; }
     
     form { padding: 30px; }
     
     .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #4a5568; }
-    .form-control { width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 16px; transition: border-color 0.2s; }
-    .form-control:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
-    .is-invalid { border-color: #e53e3e; }
-    .invalid-feedback { color: #e53e3e; font-size: 14px; margin-top: 5px; }
+    .form-group label { 
+      display: block; 
+      margin-bottom: 8px; 
+      font-weight: 600; 
+      color: var(--text-primary); 
+    }
+    .form-control { 
+      width: 100%; 
+      padding: 10px; 
+      border: 1px solid var(--glass-border); 
+      border-radius: 6px; 
+      font-size: 16px; 
+      transition: border-color 0.2s;
+      background: var(--glass-surface);
+      color: var(--text-primary);
+    }
+    .form-control:focus { 
+      outline: none; 
+      border-color: var(--primary-glow); 
+      box-shadow: 0 0 0 3px rgba(102,126,234,0.1); 
+    }
+    .is-invalid { border-color: var(--danger-glow); }
+    .invalid-feedback { color: var(--danger-glow); font-size: 14px; margin-top: 5px; }
     
     .row { display: flex; gap: 20px; }
     .col { flex: 1; }
     
-    .form-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; pt-4; border-top: 1px solid #e2e8f0; }
+    .form-actions { 
+      display: flex; 
+      justify-content: flex-end; 
+      gap: 15px; 
+      margin-top: 30px; 
+      padding-top: 16px; 
+      border-top: 1px solid var(--glass-border); 
+    }
     
-    .btn { padding: 10px 24px; border-radius: 6px; font-weight: 600; cursor: pointer; text-decoration: none; border: none; font-size: 16px; }
-    .btn-primary { background: #667eea; color: white; }
-    .btn-primary:hover { background: #5a67d8; }
+    .btn { 
+      padding: 10px 24px; 
+      border-radius: 6px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      text-decoration: none; 
+      border: none; 
+      font-size: 16px; 
+    }
+    .btn-primary { background: var(--primary-glow); color: white; }
+    .btn-primary:hover { opacity: 0.9; }
     .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
-    .btn-secondary { background: #edf2f7; color: #4a5568; }
-    .btn-secondary:hover { background: #e2e8f0; }
+    .btn-secondary { 
+      background: rgba(255,255,255,0.1); 
+      color: var(--text-primary); 
+      border: 1px solid var(--glass-border);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.15); }
     
-    .alert-danger { margin-top: 20px; padding: 12px; background: #fff5f5; color: #c53030; border-radius: 6px; }
+    .alert-danger { 
+      margin-top: 20px; 
+      padding: 12px; 
+      background: rgba(244, 63, 94, 0.1); 
+      color: var(--danger-glow); 
+      border-radius: 6px;
+      border: 1px solid var(--danger-glow);
+    }
     .user-selection-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px; }
     .user-card { 
       padding: 8px 16px; 
-      border: 1px solid #e2e8f0; 
+      border: 1px solid var(--glass-border); 
       border-radius: 20px; 
-      background: #f7fafc; 
+      background: var(--glass-surface); 
       cursor: pointer; 
       transition: all 0.2s;
       font-size: 14px;
       user-select: none;
+      color: var(--text-primary);
     }
-    .user-card:hover { background: #edf2f7; border-color: #cbd5e0; }
+    .user-card:hover { 
+      background: rgba(255,255,255,0.1); 
+      border-color: var(--primary-glow); 
+    }
     .user-card.selected { 
-      background: #667eea; 
+      background: var(--primary-glow); 
       color: white; 
-      border-color: #667eea;
+      border-color: var(--primary-glow);
       box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
     }
   `]

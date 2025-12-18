@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { ThemeService } from '../../../core/services/theme.service';
 import { User } from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   template: `
     <nav class="navbar">
       <div class="nav-container">
         <div class="nav-brand">
-          <h2>📋 Gestionnaire de Tâches</h2>
+          <h2>Flowify</h2>
         </div>
         
         <div class="nav-links" *ngIf="currentUser">
@@ -22,27 +23,41 @@ import { User } from '../../../core/models/user.model';
           <a routerLink="/users" routerLinkActive="active" *ngIf="isAdmin">Utilisateurs</a>
         </div>
         
-        <div class="nav-user" *ngIf="currentUser">
-          <span class="user-name">{{ currentUser.name }}</span>
-          <span class="user-role badge" [class.badge-admin]="isAdmin">{{ currentUser.role }}</span>
-          <button (click)="logout()" class="btn-logout">Déconnexion</button>
+        <div class="nav-actions" *ngIf="currentUser">
+          <!-- Theme Toggle -->
+          <button class="btn-icon theme-toggle" (click)="toggleTheme()" [title]="isDark() ? 'Passer en Mode Clair' : 'Passer en Mode Sombre'">
+            <span *ngIf="isDark()">☀️</span>
+            <span *ngIf="!isDark()">🌙</span>
+          </button>
+
+          <!-- User Profile -->
+          <div class="nav-user">
+            <div class="user-info">
+              <span class="user-name">{{ currentUser.name }}</span>
+              <span class="user-role badge" [class.badge-admin]="isAdmin">{{ currentUser.role }}</span>
+            </div>
+            <button (click)="logout()" class="btn btn-sm btn-logout">Déconnexion</button>
+          </div>
         </div>
       </div>
     </nav>
   `,
   styles: [`
     .navbar {
-      background: white;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      background: var(--surface-color);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: 9999;
     }
 
     .nav-container {
-      max-width: 1400px;
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 16px 24px;
+      padding: 0 24px;
+      height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -51,98 +66,111 @@ import { User } from '../../../core/models/user.model';
 
     .nav-brand h2 {
       margin: 0;
-      font-size: 20px;
-      color: #667eea;
-      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text-heading);
+      font-weight: 800;
     }
 
     .nav-links {
       display: flex;
-      gap: 24px;
-      flex: 1;
+      gap: 8px;
     }
 
     .nav-links a {
       text-decoration: none;
-      color: #4a5568;
-      font-weight: 600;
+      color: var(--text-muted);
+      font-weight: 500;
       padding: 8px 16px;
-      border-radius: 8px;
+      border-radius: 6px;
       transition: all 0.2s ease;
+      font-size: 0.9rem;
     }
 
     .nav-links a:hover {
-      background: #f7fafc;
-      color: #667eea;
+      color: var(--text-heading);
+      background: var(--surface-hover);
     }
 
     .nav-links a.active {
-      background: #667eea;
-      color: white;
+      color: var(--primary-color);
+      background: color-mix(in srgb, var(--primary-color) 10%, transparent);
+      font-weight: 600;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .theme-toggle {
+      font-size: 1.2rem;
+      cursor: pointer;
     }
 
     .nav-user {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
+      padding-left: 24px;
+      border-left: 1px solid var(--border-color);
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      line-height: 1.2;
     }
 
     .user-name {
       font-weight: 600;
-      color: #2d3748;
+      font-size: 0.9rem;
+      color: var(--text-heading);
     }
 
     .user-role {
-      font-size: 12px;
-      padding: 4px 12px;
-    }
-
-    .badge-admin {
-      background: #9f7aea;
-      color: white;
+      font-size: 0.7rem;
+      color: var(--text-muted);
     }
 
     .btn-logout {
-      padding: 8px 16px;
-      background: #fc8181;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      background: var(--bg-color);
+      color: var(--text-body);
+      border: 1px solid var(--border-color);
     }
 
     .btn-logout:hover {
-      background: #f56565;
-      transform: translateY(-1px);
+      background: var(--surface-hover);
+      color: #E11D48;
+      border-color: #E11D48;
     }
 
-    @media (max-width: 768px) {
-      .nav-container {
-        flex-direction: column;
-        gap: 16px;
-      }
-
-      .nav-links {
-        width: 100%;
-        justify-content: center;
-      }
+    @media(max-width: 768px) {
+      .nav-links { display: none; }
     }
   `]
 })
 export class NavbarComponent {
   currentUser: User | null = null;
   isAdmin = false;
+  isDark = this.themeService.isDarkTheme;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    public themeService: ThemeService
   ) {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
       this.isAdmin = this.authService.isAdmin();
     });
+  }
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
   }
 
   logout(): void {

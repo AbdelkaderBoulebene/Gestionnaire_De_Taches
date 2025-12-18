@@ -6,10 +6,10 @@ import { ProjectService } from '../../../core/services/project.service';
 import { Project, Priority } from '../../../core/models/project.model';
 
 @Component({
-    selector: 'app-project-form',
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, RouterLink],
-    template: `
+  selector: 'app-project-form',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  template: `
     <div class="container form-page">
       <div class="card">
         <div class="card-header">
@@ -21,6 +21,7 @@ import { Project, Priority } from '../../../core/models/project.model';
           <div class="form-group">
             <label for="name">Nom du projet</label>
             <input type="text" id="name" formControlName="name" class="form-control" 
+                   maxlength="50"
                    [class.is-invalid]="submitted && f['name'].errors">
             <div class="invalid-feedback" *ngIf="submitted && f['name'].errors">
               <span *ngIf="f['name'].errors['required']">Le nom est requis</span>
@@ -89,117 +90,171 @@ import { Project, Priority } from '../../../core/models/project.model';
       </div>
     </div>
   `,
-    styles: [`
+  styles: [`
     .form-page { max-width: 800px; margin: 40px auto; padding: 0 20px; }
-    .card { background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); overflow: hidden; }
-    .card-header { background: #f7fafc; padding: 20px 30px; border-bottom: 1px solid #e2e8f0; }
-    .card-header h2 { margin: 0; color: #2d3748; font-size: 24px; }
+    .card { 
+      background: var(--glass-surface); 
+      border-radius: 12px; 
+      box-shadow: var(--glass-shadow); 
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+    }
+    .card-header { 
+      background: rgba(0,0,0,0.05); 
+      padding: 20px 30px; 
+      border-bottom: 1px solid var(--glass-border); 
+    }
+    .card-header h2 { margin: 0; color: var(--text-primary); font-size: 24px; }
     
     form { padding: 30px; }
     
     .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #4a5568; }
-    .form-control { width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 16px; transition: border-color 0.2s; }
-    .form-control:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,0.1); }
-    .is-invalid { border-color: #e53e3e; }
-    .invalid-feedback { color: #e53e3e; font-size: 14px; margin-top: 5px; }
+    .form-group label { 
+      display: block; 
+      margin-bottom: 8px; 
+      font-weight: 600; 
+      color: var(--text-primary); 
+    }
+    .form-control { 
+      width: 100%; 
+      padding: 10px; 
+      border: 1px solid var(--glass-border); 
+      border-radius: 6px; 
+      font-size: 16px; 
+      transition: border-color 0.2s;
+      background: var(--glass-surface);
+      color: var(--text-primary);
+    }
+    .form-control:focus { 
+      outline: none; 
+      border-color: var(--primary-glow); 
+      box-shadow: 0 0 0 3px rgba(102,126,234,0.1); 
+    }
+    .is-invalid { border-color: var(--danger-glow); }
+    .invalid-feedback { color: var(--danger-glow); font-size: 14px; margin-top: 5px; }
     
     .row { display: flex; gap: 20px; }
     .col { flex: 1; }
     
-    .form-actions { display: flex; justify-content: flex-end; gap: 15px; margin-top: 30px; pt-4; border-top: 1px solid #e2e8f0; }
+    .form-actions { 
+      display: flex; 
+      justify-content: flex-end; 
+      gap: 15px; 
+      margin-top: 30px; 
+      padding-top: 16px; 
+      border-top: 1px solid var(--glass-border); 
+    }
     
-    .btn { padding: 10px 24px; border-radius: 6px; font-weight: 600; cursor: pointer; text-decoration: none; border: none; font-size: 16px; }
-    .btn-primary { background: #667eea; color: white; }
-    .btn-primary:hover { background: #5a67d8; }
+    .btn { 
+      padding: 10px 24px; 
+      border-radius: 6px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      text-decoration: none; 
+      border: none; 
+      font-size: 16px; 
+    }
+    .btn-primary { background: var(--primary-glow); color: white; }
+    .btn-primary:hover { opacity: 0.9; }
     .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
-    .btn-secondary { background: #edf2f7; color: #4a5568; }
-    .btn-secondary:hover { background: #e2e8f0; }
+    .btn-secondary { 
+      background: rgba(255,255,255,0.1); 
+      color: var(--text-primary); 
+      border: 1px solid var(--glass-border);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.15); }
     
-    .alert-danger { margin-top: 20px; padding: 12px; background: #fff5f5; color: #c53030; border-radius: 6px; }
+    .alert-danger { 
+      margin-top: 20px; 
+      padding: 12px; 
+      background: rgba(244, 63, 94, 0.1); 
+      color: var(--danger-glow); 
+      border-radius: 6px;
+      border: 1px solid var(--danger-glow);
+    }
   `]
 })
 export class ProjectFormComponent implements OnInit {
-    projectForm: FormGroup;
-    isEditing = false;
-    loading = false;
-    submitted = false;
-    error = '';
-    projectId?: number;
+  projectForm: FormGroup;
+  isEditing = false;
+  loading = false;
+  submitted = false;
+  error = '';
+  projectId?: number;
 
-    constructor(
-        private fb: FormBuilder,
-        private projectService: ProjectService,
-        private router: Router,
-        private route: ActivatedRoute
-    ) {
-        this.projectForm = this.fb.group({
-            name: ['', Validators.required],
-            description: [''],
-            startDate: [''],
-            endDate: [''],
-            priority: ['MEDIUM', Validators.required],
-            status: ['ACTIVE']
+  constructor(
+    private fb: FormBuilder,
+    private projectService: ProjectService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.projectForm = this.fb.group({
+      name: ['', Validators.required],
+      description: [''],
+      startDate: [''],
+      endDate: [''],
+      priority: ['MEDIUM', Validators.required],
+      status: ['ACTIVE']
+    });
+  }
+
+  ngOnInit(): void {
+    this.projectId = Number(this.route.snapshot.paramMap.get('id'));
+    if (this.projectId) {
+      this.isEditing = true;
+      this.loadProject(this.projectId);
+    }
+  }
+
+  get f() { return this.projectForm.controls; }
+
+  loadProject(id: number): void {
+    this.loading = true;
+    this.projectService.getProject(id).subscribe({
+      next: (project) => {
+        this.projectForm.patchValue({
+          name: project.name,
+          description: project.description,
+          startDate: project.startDate,
+          endDate: project.endDate,
+          priority: project.priority,
+          status: project.status
         });
-    }
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Erreur lors du chargement du projet';
+        this.loading = false;
+        console.error(err);
+      }
+    });
+  }
 
-    ngOnInit(): void {
-        this.projectId = Number(this.route.snapshot.paramMap.get('id'));
-        if (this.projectId) {
-            this.isEditing = true;
-            this.loadProject(this.projectId);
-        }
-    }
+  onSubmit(): void {
+    this.submitted = true;
+    if (this.projectForm.invalid) return;
 
-    get f() { return this.projectForm.controls; }
+    this.loading = true;
+    this.error = '';
 
-    loadProject(id: number): void {
-        this.loading = true;
-        this.projectService.getProject(id).subscribe({
-            next: (project) => {
-                this.projectForm.patchValue({
-                    name: project.name,
-                    description: project.description,
-                    startDate: project.startDate,
-                    endDate: project.endDate,
-                    priority: project.priority,
-                    status: project.status
-                });
-                this.loading = false;
-            },
-            error: (err) => {
-                this.error = 'Erreur lors du chargement du projet';
-                this.loading = false;
-                console.error(err);
-            }
-        });
-    }
+    const projectData: Project = {
+      ...this.projectForm.value,
+      id: this.projectId
+    };
 
-    onSubmit(): void {
-        this.submitted = true;
-        if (this.projectForm.invalid) return;
+    const request = this.isEditing
+      ? this.projectService.updateProject(this.projectId!, projectData)
+      : this.projectService.createProject(projectData);
 
-        this.loading = true;
-        this.error = '';
-
-        const projectData: Project = {
-            ...this.projectForm.value,
-            id: this.projectId
-        };
-
-        const request = this.isEditing
-            ? this.projectService.updateProject(this.projectId!, projectData)
-            : this.projectService.createProject(projectData);
-
-        request.subscribe({
-            next: () => {
-                this.router.navigate(['/projects']);
-            },
-            error: (err) => {
-                this.error = 'Une erreur est survenue lors de l\'enregistrement';
-                this.loading = false;
-                console.error(err);
-            }
-        });
-    }
+    request.subscribe({
+      next: () => {
+        this.router.navigate(['/projects']);
+      },
+      error: (err) => {
+        this.error = 'Une erreur est survenue lors de l\'enregistrement';
+        this.loading = false;
+        console.error(err);
+      }
+    });
+  }
 }
